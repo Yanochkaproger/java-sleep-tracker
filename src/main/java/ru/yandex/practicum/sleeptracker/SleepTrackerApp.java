@@ -42,3 +42,4 @@ public class SleepTrackerApp {
         }
     }
 }
+        //Анализатор сна, реализован без циклов for/while
