@@ -14,8 +14,13 @@ public class ChronotypeAnalyzer implements Function<List<SleepingSession>, Sleep
     public enum Chronotype {
         OWL("Сова"), LARK("Жаворонок"), DOVE("Голубь");
         private final String displayName;
-        Chronotype(String displayName) { this.displayName = displayName; }
-        @Override public String toString() { return displayName; }
+        Chronotype(String displayName) {
+            this.displayName = displayName;
+        }
+
+        @Override public String toString() {
+            return displayName;
+        }
     }
 
     @Override
