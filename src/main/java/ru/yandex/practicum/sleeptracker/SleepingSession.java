@@ -25,7 +25,9 @@ public class SleepingSession {
     public LocalDateTime getSleepEnd() {
         return sleepEnd;
     }
-    public SleepQuality getQuality() { return quality; }
+    public SleepQuality getQuality() {
+        return quality;
+    }
 
     // Длительность в минутах
     public long getDurationMinutes() {
