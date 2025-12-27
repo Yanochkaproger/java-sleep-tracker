@@ -25,6 +25,7 @@ public class SleepingSession {
     public LocalDateTime getSleepEnd() {
         return sleepEnd;
     }
+
     public SleepQuality getQuality() {
         return quality;
     }
