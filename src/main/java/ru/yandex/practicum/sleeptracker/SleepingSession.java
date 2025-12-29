@@ -1,13 +1,14 @@
 package ru.yandex.practicum.sleeptracker;
 
-
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
 public class SleepingSession {
+
     private final LocalDateTime sleepStart;
     private final LocalDateTime sleepEnd;
-    private final ru.yandex.practicum.sleeptracker.SleepQuality quality;
+    private final SleepQuality quality;
 
     public SleepingSession(LocalDateTime sleepStart, LocalDateTime sleepEnd, SleepQuality quality) {
         if (sleepStart == null || sleepEnd == null || sleepEnd.isBefore(sleepStart)) {
@@ -30,29 +31,30 @@ public class SleepingSession {
         return quality;
     }
 
-    // Длительность в минутах
     public long getDurationMinutes() {
         return sleepStart.until(sleepEnd, ChronoUnit.MINUTES);
     }
 
-    // ✅ ИСПРАВЛЕНО: корректное определение ночной сессии
     public boolean isNightSession() {
         LocalDateTime start = getSleepStart();
         LocalDateTime end = getSleepEnd();
 
-        // Проверяем ночь, начинающуюся в день начала сна: [DD 00:00, DD 06:00]
+        // Проверяем каждую ночь в диапазоне от начала сна до конца сна
+        // Ночь: с 00:00 до 06:00 включительно
+
+        // Начинаем с полуночи дня начала сна
         LocalDateTime nightStart = start.toLocalDate().atStartOfDay();
-        LocalDateTime nightEnd = nightStart.plusHours(6);
+        while (!nightStart.isAfter(end)) {
+            LocalDateTime nightEnd = nightStart.plusHours(6); // до 06:00
 
-        if (!end.isBefore(nightStart) && !start.isAfter(nightEnd)) {
-            return true;
+            // Проверяем пересечение: [start, end] ∩ [nightStart, nightEnd] ≠ ∅
+            boolean overlaps = !end.isBefore(nightStart) && !start.isAfter(nightEnd);
+            if (overlaps) {
+                return true;
+            }
+            nightStart = nightStart.plusDays(1);
         }
-
-        // Проверяем следующую ночь: [DD+1 00:00, DD+1 06:00]
-        nightStart = nightStart.plusDays(1);
-        nightEnd = nightEnd.plusDays(1);
-
-        return !end.isBefore(nightStart) && !start.isAfter(nightEnd);
+        return false;
     }
 
     @Override
