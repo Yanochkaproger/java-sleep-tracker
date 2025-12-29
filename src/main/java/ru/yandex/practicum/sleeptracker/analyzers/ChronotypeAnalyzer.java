@@ -11,8 +11,11 @@ import java.util.stream.Collectors;
 
 public class ChronotypeAnalyzer implements Function<List<SleepingSession>, SleepAnalysisResult> {
 
+    public static final String DESCRIPTION = "Хронотип";
+
     public enum Chronotype {
         OWL("Сова"), LARK("Жаворонок"), DOVE("Голубь");
+
         private final String displayName;
 
         Chronotype(String displayName) {
@@ -44,7 +47,7 @@ public class ChronotypeAnalyzer implements Function<List<SleepingSession>, Sleep
             result = Chronotype.DOVE; // включая равенство
         }
 
-        return new SleepAnalysisResult("Хронотип", result);
+        return new SleepAnalysisResult(DESCRIPTION, result);
     }
 
     private Chronotype classifyNight(SleepingSession session) {

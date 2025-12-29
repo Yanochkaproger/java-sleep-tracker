@@ -13,10 +13,12 @@ import java.util.stream.Collectors;
 
 public class SleeplessNightsAnalyzer implements Function<List<SleepingSession>, SleepAnalysisResult> {
 
+    private static final String DESCRIPTION = "Бессонных ночей";
+
     @Override
     public SleepAnalysisResult apply(List<SleepingSession> sessions) {
         if (sessions.isEmpty()) {
-            return new SleepAnalysisResult("Бессонных ночей", 0);
+            return new SleepAnalysisResult(DESCRIPTION, 0);
         }
 
         // Границы логирования
@@ -40,7 +42,7 @@ public class SleeplessNightsAnalyzer implements Function<List<SleepingSession>, 
                 .collect(Collectors.toSet());
 
         long sleeplessNights = totalNights - nightsWithSleep.size();
-        return new SleepAnalysisResult("Бессонных ночей", Math.max(0, sleeplessNights));
+        return new SleepAnalysisResult(DESCRIPTION, Math.max(0, sleeplessNights));
     }
 
     // ✅ ИСПРАВЛЕНО: для 05.10 00:10 → ночь 04/05
