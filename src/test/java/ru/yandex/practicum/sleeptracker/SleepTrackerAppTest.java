@@ -133,6 +133,15 @@ class SleepTrackerAnalyzerTest {
         assertEquals(0L, new SleeplessNightsAnalyzer().apply(sessions).getValue());
     }
 
+    @Test
+    void sleeplessNights_oneGap() {
+        // Ночь 02/03 пропущена
+        List<SleepingSession> sessions = List.of(
+                s("01.10.25 23:00", "02.10.25 07:00", SleepQuality.GOOD), // ночь 01/02
+                s("03.10.25 23:00", "04.10.25 07:00", SleepQuality.GOOD)  // ночь 03/04
+        );
+        assertEquals(1L, new SleeplessNightsAnalyzer().apply(sessions).getValue());
+    }
 
     // ============ Тесты для ChronotypeAnalyzer (2 теста) ============
     @Test
